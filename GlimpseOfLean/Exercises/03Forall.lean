@@ -88,8 +88,10 @@ symbol you can put your mouse cursor above the symbol and wait for one second.
 -/
 
 example (f g : ℝ → ℝ) (hf : even_fun f) : even_fun (g ∘ f) := by
-  sorry
-
+  intro r
+  specialize hf r
+  unfold comp
+  rw [hf]
 /-
 Let's have more quantifiers, and play with forward and backward reasoning.
 
@@ -156,7 +158,13 @@ example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :
 
 example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_increasing g) :
     non_increasing (g ∘ f) := by
-  sorry
+  unfold non_decreasing at hf
+  unfold non_increasing at hg
+  intro x₁ x₂ ord
+  unfold comp
+  apply hg
+  apply hf
+  assumption
 
 /- # Finding lemmas
 
@@ -170,7 +178,8 @@ The following exercises teach you two techniques to avoid needing to remember na
 /- Use `simp` as a first step to prove the following. Note that `X : Set ℝ`
 means that `X` is a set containing (only) real numbers. -/
 example (x : ℝ) (X Y : Set ℝ) (hx : x ∈ X) : x ∈ (X ∩ Y) ∪ (X \ Y) := by
-  sorry
+  simp
+  assumption
 
 /- Use `apply?` to find the lemma that every continuous function with compact support
 has a global minimum. You can click on the suggestion that appears to replace
@@ -178,7 +187,7 @@ has a global minimum. You can click on the suggestion that appears to replace
 -/
 
 example (f : ℝ → ℝ) (hf : Continuous f) (h2f : HasCompactSupport f) : ∃ x, ∀ y, f x ≤ f y := by
-  sorry
+  exact Continuous.exists_forall_le_of_hasCompactSupport hf h2f
 
 /-
 Note that `apply?` does not only suggest full proofs. It can suggest lemmas that
