@@ -1,6 +1,6 @@
 import GlimpseOfLean.Library.Short
 
-/- # A shorter Glimpse of Lean
+/- # A glance of lean
 
 This file is the short track of the Glimpse of Lean project. It is meant for people
 who want to spend two hours discovering Lean. The hope is that two hours are
